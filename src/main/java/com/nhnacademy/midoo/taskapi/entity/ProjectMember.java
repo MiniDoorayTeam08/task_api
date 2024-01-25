@@ -31,6 +31,6 @@ public class ProjectMember {
         String accountId;
 
         @Column(name = "project_id")
-        Integer projectId;
+        Long projectId;
     }
 }
