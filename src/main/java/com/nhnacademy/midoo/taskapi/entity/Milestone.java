@@ -19,7 +19,7 @@ public class Milestone {
     @Id
     @Column(name = "milestone_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer milestoneId;
+    private Long milestoneId;
 
     @Column(name = "milestone_name")
     private String milestoneName;
