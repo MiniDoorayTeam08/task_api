@@ -26,6 +26,7 @@ public class Milestones {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "project_id")
-    private Integer projectId;
+    @JoinColumn(name = "project_id")
+    @ManyToOne
+    private Projects projects;
 }

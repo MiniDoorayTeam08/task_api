@@ -2,6 +2,7 @@ package com.nhnacademy.midoo.taskapi.entity;
 
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
@@ -13,6 +14,12 @@ import lombok.*;
 public class ProjectMembers {
     @EmbeddedId
     private Pk pk;
+
+    @ManyToOne
+    @MapsId("projectId")
+    @JoinColumn(name = "project_id")
+    private Projects project;
+
 
     @NoArgsConstructor
     @AllArgsConstructor

@@ -10,21 +10,17 @@ import lombok.*;
 @Entity
 @Table(name = "tesk_tag")
 public class TaskTags {
-    @EmbeddedId
-    private Pk pk;
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    @Getter
-    @Setter
-    @Embeddable
-    public static class Pk implements Serializable{
-        @Column(name = "task_id")
-        private Integer taskId;
+    //TODO :: db
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-        @Column(name = "tag_id")
-        private Integer tagId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "tag_id")
+    private Tags tag;
 
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Tasks task;
 }

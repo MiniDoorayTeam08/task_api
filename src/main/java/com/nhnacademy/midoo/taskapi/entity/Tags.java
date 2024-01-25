@@ -1,5 +1,6 @@
 package com.nhnacademy.midoo.taskapi.entity;
 
+import java.util.List;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,7 @@ public class Tags {
 
     @Column(name = "project_id")
     private Integer projectId;
+
+    @OneToMany(mappedBy = "tag")
+    private List<TaskTags> taskTags;
 }
