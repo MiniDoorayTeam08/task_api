@@ -12,15 +12,16 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "task")
-public class Tasks {
+@Table(name = "tasks")
+public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
@@ -34,11 +35,11 @@ public class Tasks {
 
     @ManyToOne
     @JoinColumn(name = "poject_id")
-    private Projects projects;
+    private Project project;
 
     @ManyToOne
     @JoinColumn(name = "poject_id")
-    private Milestones milestones;
+    private Milestone milestone;
 
     @Column(name = "account_id")
     private String accountId;

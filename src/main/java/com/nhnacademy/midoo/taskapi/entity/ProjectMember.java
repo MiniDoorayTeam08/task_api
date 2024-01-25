@@ -1,25 +1,24 @@
 package com.nhnacademy.midoo.taskapi.entity;
 
-
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name = "project_member")
-public class ProjectMembers {
+public class ProjectMember {
     @EmbeddedId
     private Pk pk;
 
     @ManyToOne
     @MapsId("projectId")
     @JoinColumn(name = "project_id")
-    private Projects project;
-
+    private Project project;
 
     @NoArgsConstructor
     @AllArgsConstructor
