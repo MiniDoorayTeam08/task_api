@@ -35,4 +35,7 @@ public class Tasks {
 
     @Column(name = "milestone_id")
     private Long milestoneId;
+
+    @Column(name = "account_id")
+    private String accountId;
 }
