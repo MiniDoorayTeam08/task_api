@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "tesk_tag")
-public class TaskTag {
+public class TaskTags {
     @EmbeddedId
     private Pk pk;
 

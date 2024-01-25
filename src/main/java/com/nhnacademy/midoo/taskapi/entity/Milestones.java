@@ -1,5 +1,6 @@
 package com.nhnacademy.midoo.taskapi.entity;
 
+import java.time.LocalDateTime;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,15 +10,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "tag")
-public class Tag {
+@Table(name = "milestone")
+public class Milestones {
     @Id
-    @Column(name = "tag_id")
+    @Column(name = "milestone_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tagId;
+    private Integer milestoneId;
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
 
     @Column(name = "project_id")
     private Integer projectId;

@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "project_member")
-public class ProjectMember {
+public class ProjectMembers {
     @EmbeddedId
     private Pk pk;
 
