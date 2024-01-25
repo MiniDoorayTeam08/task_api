@@ -1,0 +1,25 @@
+POST http://localhost:7070/comments/5/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "commentContent": "good!good!",
+  "accountId": "sysy"
+}
+
+###
+GET http://localhost:7070/comments/5
+
+###
+GET http://localhost:7070/comments/3/comment
+
+###
+PUT http://localhost:7070/comments/3
+Content-Type: application/json;charset=UTF-8
+
+{
+  "commentContent": "수정완료",
+  "accountId": "sysy"
+}
+
+###
+DELETE  http://localhost:7070/comments/4

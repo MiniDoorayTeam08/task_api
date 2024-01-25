@@ -1,7 +1,65 @@
 package com.nhnacademy.midoo.taskapi.controller;
 
+import com.nhnacademy.midoo.taskapi.domain.CommentRequest;
+import com.nhnacademy.midoo.taskapi.domain.CommentResponse;
+import com.nhnacademy.midoo.taskapi.exception.ValidationFailedException;
+import com.nhnacademy.midoo.taskapi.service.CommentService;
+import java.util.List;
+import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping(value = "/comments",produces = MediaType.APPLICATION_JSON_VALUE)
 public class CommentRestController {
+    private final CommentService commentService;
+
+    @GetMapping("/{taskId}")
+    public List<CommentResponse> getComments(@PathVariable Long taskId){
+        return commentService.getComments(taskId);
+    }
+
+    @GetMapping("/{commentId}/comment")
+    public CommentResponse getComment(@PathVariable Long commentId){
+        return commentService.getComment(commentId);
+    }
+
+    @PostMapping("/{taskId}/register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public CommentResponse registerComment(@PathVariable Long taskId,
+                                           @Valid @RequestBody CommentRequest commentRequest,
+                                           BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
+        return commentService.createComment(taskId, commentRequest);
+    }
+
+    @PutMapping("/{commentId}")
+    public CommentResponse modifyComment(@PathVariable Long commentId,
+                                         @Valid @RequestBody CommentRequest commentRequest,
+                                         BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            throw new ValidationFailedException(bindingResult);
+        }
+        return commentService.modifyComment(commentId, commentRequest);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable Long commentId){
+        commentService.deleteComment(commentId);
+    }
 }
