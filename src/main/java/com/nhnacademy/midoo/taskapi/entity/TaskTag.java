@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "tesk_tag")
+@Table(name = "task_tag")
 public class TaskTag {
     @EmbeddedId
     private Pk pk;

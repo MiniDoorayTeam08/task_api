@@ -1,0 +1,30 @@
+###
+GET http://localhost:7070/projects/2
+
+###
+GET http://localhost:7070/projects/myprojects/hihi
+
+###
+POST http://localhost:7070/projects/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "accountId":"new",
+  "projectName":"project4",
+  "projectExplain":"project is good",
+  "projectStatus":"활성"
+}
+
+###
+PUT http://localhost:7070/projects/1
+Content-Type: application/json;charset=UTF-8
+
+{
+  "accountId":"suyeon",
+  "projectName":"project4",
+  "projectExplain":"수정이 완료되었습니다.",
+  "projectStatus":"활성"
+}
+
+###
+DELETE http://localhost:7070/projects/2

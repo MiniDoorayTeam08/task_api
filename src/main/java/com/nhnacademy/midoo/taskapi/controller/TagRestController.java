@@ -7,7 +7,6 @@ import com.nhnacademy.midoo.taskapi.service.TagService;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
-// TODO : REST API 구현해주세요
 @RestController
 public class TagRestController {
     private final TagService tagService;

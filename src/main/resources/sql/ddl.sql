@@ -5,7 +5,7 @@ CREATE TABLE `project_member` (
 );
 
 CREATE TABLE `tasks` (
-                         `task_id`	BIGINT	NOT NULL primary key,
+                         `task_id`	BIGINT	NOT NULL AUTO_INCREMENT primary key,
                          `task_title`	varchar(100)	NOT NULL,
                          `task_content`	text	NOT NULL,
                          `project_id`	BIGINT	NOT NULL,
@@ -14,14 +14,14 @@ CREATE TABLE `tasks` (
 );
 
 CREATE TABLE `comments` (
-                            `comment_id`	BIGINT	NOT NULL primary key,
+                            `comment_id`	BIGINT	NOT NULL AUTO_INCREMENT primary key,
                             `comment_content`	text	NOT NULL,
                             `task_id`	BIGINT	NOT NULL,
                             `account_id`	varchar(50)	NOT NULL
 );
 
 CREATE TABLE `projects` (
-                            `project_id`	BIGINT	NOT NULL primary key,
+                            `project_id`	BIGINT	NOT NULL AUTO_INCREMENT primary key,
                             `account_id`	 varchar(50) NOT NULL,
                             `project_status`	varchar(10) NOT NULL,
                             `project_name`	varchar(100)	NOT NULL,
@@ -29,15 +29,13 @@ CREATE TABLE `projects` (
 );
 
 CREATE TABLE `milestones` (
-                              `milestone_id`	BIGINT	NOT NULL primary key,
+                              `milestone_id`	BIGINT	NOT NULL AUTO_INCREMENT primary key,
                               `milestone_name`	varchar(50)	NOT NULL,
-                              `milestone_start_date`	date	 NULL,
-                              `milestone_end_date`	date	NULL,
                               `project_id`	BIGINT	NOT NULL
 );
 
 CREATE TABLE `tags` (
-                        `tag_id`	BIGINT	NOT NULL primary key,
+                        `tag_id`	BIGINT	NOT NULL AUTO_INCREMENT primary key,
                         `tag_name`	varchar(12)	NOT NULL,
                         `project_id`	BIGINT	NOT NULL
 );

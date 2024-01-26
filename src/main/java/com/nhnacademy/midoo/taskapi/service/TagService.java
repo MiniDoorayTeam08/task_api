@@ -5,7 +5,6 @@ import com.nhnacademy.midoo.taskapi.domain.TagRequest;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
 import java.util.List;
 
-// TODO : 1/25 = Impl까지 구현해주세요!
 public interface TagService {
     List<Tag> getTags(Long projectId);
 
