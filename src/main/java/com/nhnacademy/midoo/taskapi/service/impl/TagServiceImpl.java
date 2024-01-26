@@ -1,4 +1,4 @@
-package com.nhnacademy.midoo.taskapi.service;
+package com.nhnacademy.midoo.taskapi.service.impl;
 
 import com.nhnacademy.midoo.taskapi.domain.SetTagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
@@ -6,11 +6,12 @@ import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.exception.TagNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.TagRepository;
+import com.nhnacademy.midoo.taskapi.service.TagService;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TagServiceImpl implements TagService{
+public class TagServiceImpl implements TagService {
     public final TagRepository tagRepository;
 
     public TagServiceImpl(TagRepository tagRepository) {

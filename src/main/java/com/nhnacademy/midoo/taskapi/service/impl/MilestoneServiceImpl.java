@@ -1,15 +1,16 @@
-package com.nhnacademy.midoo.taskapi.service;
+package com.nhnacademy.midoo.taskapi.service.impl;
 
 import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
 import com.nhnacademy.midoo.taskapi.domain.SetMilestoneRequest;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.exception.MilestoneNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.MilestoneRepository;
+import com.nhnacademy.midoo.taskapi.service.MilestoneService;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MilestoneServiceImpl implements MilestoneService{
+public class MilestoneServiceImpl implements MilestoneService {
     private final MilestoneRepository milestoneRepository;
 
     public MilestoneServiceImpl(MilestoneRepository milestoneRepository) {
