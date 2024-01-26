@@ -13,7 +13,7 @@ GET http://localhost:7070/comments/5
 GET http://localhost:7070/comments/3/comment
 
 ###
-PUT http://localhost:7070/comments/3
+PUT http://localhost:7070/comments/5
 Content-Type: application/json;charset=UTF-8
 
 {

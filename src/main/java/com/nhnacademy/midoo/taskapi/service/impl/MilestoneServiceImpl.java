@@ -26,7 +26,9 @@ public class MilestoneServiceImpl implements MilestoneService {
     @Override
     public List<Milestone> getMilestone(Long projectId) {
         boolean isExist = projectRepository.existsById(projectId);
-        if(!isExist) throw new ProjectNotExistException();
+        if (!isExist) {
+            throw new ProjectNotExistException();
+        }
 
         return milestoneRepository.findAllByProjectProjectId(projectId);
     }
@@ -43,9 +45,11 @@ public class MilestoneServiceImpl implements MilestoneService {
     @Override
     public Milestone modifyMilestone(Long milestoneId, SetMilestoneRequest request) {
         boolean isExist = milestoneRepository.existsById(milestoneId);
-        if(!isExist) throw new MilestoneNotExistException();
+        if (!isExist) {
+            throw new MilestoneNotExistException();
+        }
 
-        Milestone newMilestone = milestoneRepository.findById(milestoneId).orElseThrow(MilestoneNotExistException::new);
+        Milestone newMilestone = new Milestone();
         newMilestone.setMilestoneName(request.getName());
         return milestoneRepository.save(newMilestone);
     }
@@ -54,7 +58,9 @@ public class MilestoneServiceImpl implements MilestoneService {
     @Override
     public String deleteMilestone(Long milestoneId) {
         boolean isExist = milestoneRepository.existsById(milestoneId);
-        if(!isExist) throw new MilestoneNotExistException();
+        if (!isExist) {
+            throw new MilestoneNotExistException();
+        }
         milestoneRepository.deleteById(milestoneId);
         return "milestone " + milestoneId + " : is deleted";
     }

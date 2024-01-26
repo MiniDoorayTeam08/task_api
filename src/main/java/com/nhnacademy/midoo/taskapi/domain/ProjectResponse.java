@@ -7,30 +7,31 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class ProjectResponse {
     @NotNull
-    private Long projectId;
+    Long projectId;
 
     @NotBlank
     @Size(max = 50)
-    private String accountId;
+    String accountId;
 
     @NotBlank
     @Size(max = 10)
-    private String projectName;
+    String projectName;
 
     @NotBlank
     @Size(max = 100)
-    private String projectExplain;
+    String projectExplain;
 
     @Size(max = 300)
-    private String projectStatus;
+    String projectStatus;
 
     public static ProjectResponse fromEntity(Project project) {
         return ProjectResponse.builder()

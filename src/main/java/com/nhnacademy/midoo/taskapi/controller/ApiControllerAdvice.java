@@ -18,9 +18,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(annotations = RestController.class)
 public class ApiControllerAdvice {
     @ExceptionHandler({CommentNotExistException.class, MilestoneNotExistException.class, ProjectNotExistException.class,
-            TagNotExistException.class, TaskNotExistException.class, ValidationFailedException.class})
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+            TagNotExistException.class, TaskNotExistException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleException(Exception exception) {
+        log.error("", exception);
+
+        ApiError apiError = new ApiError();
+        apiError.setErrorMessage(exception.getMessage());
+
+        return apiError;
+    }
+
+    @ExceptionHandler(ValidationFailedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleValidationException(Exception exception) {
         log.error("", exception);
 
         ApiError apiError = new ApiError();

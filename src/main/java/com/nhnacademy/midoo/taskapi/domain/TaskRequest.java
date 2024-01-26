@@ -11,12 +11,13 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
 @Value
 @Builder
-@AllArgsConstructor
+@Getter
 public class TaskRequest {
     @NotBlank
     @Size(max = 100) String taskTitle;

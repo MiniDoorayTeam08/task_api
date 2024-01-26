@@ -8,19 +8,20 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Value;
 
-@Data
+@Value
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class CommentRequest {
     @NotBlank
-    private String commentContent;
+    String commentContent;
 
     @NotBlank
     @Size(max = 50)
-    private String accountId;
+    String accountId;
 
     public static Comment toEntity(CommentRequest commentRequest) {
         return Comment.builder()
