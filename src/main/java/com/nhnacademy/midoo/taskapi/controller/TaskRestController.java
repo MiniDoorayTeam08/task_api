@@ -1,5 +1,7 @@
 package com.nhnacademy.midoo.taskapi.controller;
 
+import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
+import com.nhnacademy.midoo.taskapi.domain.TagResponse;
 import com.nhnacademy.midoo.taskapi.domain.TaskRequest;
 import com.nhnacademy.midoo.taskapi.domain.TaskResponse;
 import com.nhnacademy.midoo.taskapi.exception.ValidationFailedException;
@@ -30,6 +32,17 @@ public class TaskRestController {
     public List<TaskResponse> getTasks(@PathVariable Long projectId) {
         return taskService.getTasks(projectId);
     }
+
+    @GetMapping("/tags/{taskId}")
+    public List<TagResponse> getTagList(@PathVariable Long taskId) {
+        return taskService.getTagList(taskId);
+    }
+
+    @GetMapping("/milestone/{taskId}")
+    public MilestoneResponse getMilestone(@PathVariable Long taskId) {
+        return taskService.getMilestone(taskId);
+    }
+
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)

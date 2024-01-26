@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(value = "/tags")
 public class TagRestController {
     private final TagService tagService;
 

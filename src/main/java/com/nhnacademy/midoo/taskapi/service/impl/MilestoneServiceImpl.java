@@ -4,18 +4,19 @@ import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
 import com.nhnacademy.midoo.taskapi.domain.SetMilestoneRequest;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.exception.MilestoneNotExistException;
+import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.MilestoneRepository;
+import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.MilestoneService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MilestoneServiceImpl implements MilestoneService {
     private final MilestoneRepository milestoneRepository;
-
-    public MilestoneServiceImpl(MilestoneRepository milestoneRepository) {
-        this.milestoneRepository = milestoneRepository;
-    }
+    private final ProjectRepository projectRepository;
 
     @Override
     public List<Milestone> getMilestone(Long projectId) {
@@ -31,6 +32,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 
         Milestone newMilestone = new Milestone();
         newMilestone.setMilestoneName(request.getName());
+        newMilestone.setProject(projectRepository.findById(projectId).orElseThrow(ProjectNotExistException::new));
 //        newMilestone.setProject();
         return milestoneRepository.save(newMilestone);
     }

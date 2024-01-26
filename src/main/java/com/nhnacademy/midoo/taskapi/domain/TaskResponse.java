@@ -27,10 +27,10 @@ public class TaskResponse {
     private String taskContent;
 
     @NotNull
-    private Project project;
+    private Long projectId;
 
     @NotNull
-    private Milestone milestone;
+    private Long milestoneId;
 
     @NotBlank
     @Size(max = 50)
@@ -41,8 +41,8 @@ public class TaskResponse {
                 .taskId(task.getTaskId())
                 .taskTitle(task.getTaskTitle())
                 .taskContent(task.getTaskContent())
-                .project(task.getProject())
-                .milestone(task.getMilestone())
+                .projectId(task.getProject().getProjectId())
+                .milestoneId(task.getMilestone().getMilestoneId())
                 .accountId(task.getAccountId())
                 .build();
     }

@@ -24,12 +24,6 @@ public class Milestone {
     @Column(name = "milestone_name")
     private String milestoneName;
 
-    @Column(name = "milestone_start_date")
-    private LocalDateTime milestoneStartDate;
-
-    @Column(name = "milestone_end_date")
-    private LocalDateTime milestoneEndDate;
-
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;

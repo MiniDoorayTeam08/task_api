@@ -2,21 +2,21 @@ package com.nhnacademy.midoo.taskapi.service.impl;
 
 import com.nhnacademy.midoo.taskapi.domain.SetTagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
-import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
+import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TagNotExistException;
+import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.repository.TagRepository;
 import com.nhnacademy.midoo.taskapi.service.TagService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
-    public final TagRepository tagRepository;
-
-    public TagServiceImpl(TagRepository tagRepository) {
-        this.tagRepository = tagRepository;
-    }
+    private final TagRepository tagRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     public List<Tag> getTags(Long projectId) {
@@ -31,6 +31,7 @@ public class TagServiceImpl implements TagService {
 
         Tag newTag = new Tag();
         newTag.setTagName(request.getName());
+        newTag.setProject(projectRepository.findById(projectId).orElseThrow(ProjectNotExistException::new));
 //        newTag.setProject(new Project());
         return tagRepository.save(newTag);
     }

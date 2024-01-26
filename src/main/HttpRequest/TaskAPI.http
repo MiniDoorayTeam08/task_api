@@ -2,7 +2,7 @@ POST http://localhost:7070/tasks/register
 Content-Type: application/json;charset=UTF-8
 
 {
-  "taskTitle": "두번째 업무",
+  "taskTitle": "테스크와 태크도 같이?!",
   "taskContent": "화이팅",
   "project": {
     "projectId": 3,
@@ -10,6 +10,41 @@ Content-Type: application/json;charset=UTF-8
     "projectName": "project3",
     "projectExplain": "project is good",
     "projectStatus": "활성"
+  },
+  "tagList": [
+    {
+      "tagId":1,
+      "tagName": "NHN Academy",
+      "project": {
+        "projectId": 3,
+        "accountId": "suyeon",
+        "projectName": "project3",
+        "projectExplain": "project is good",
+        "projectStatus": "활성"
+      }
+    }, {
+      "tagId":2,
+      "tagName": "NHN Academy",
+      "project": {
+        "projectId": 3,
+        "accountId": "suyeon",
+        "projectName": "project3",
+        "projectExplain": "project is good",
+        "projectStatus": "활성"
+      }
+    }
+  ],
+  "milestone": {
+    "milestoneId": 7,
+    "milestoneName": "release3",
+    "project": {
+      "projectId": 3,
+      "accountId": "suyeon",
+      "projectName": "project3",
+      "projectExplain": "project is good",
+      "projectStatus": "활성",
+      "projectMembers": []
+    }
   },
   "accountId": "suyeon"
 }
@@ -39,3 +74,9 @@ Content-Type: application/json;charset=UTF-8
 
 ###
 DELETE http://localhost:7070/tasks/2
+
+###
+GET http://localhost:7070/tasks/tags/13
+
+###
+GET http://localhost:7070/tasks/milestone/16

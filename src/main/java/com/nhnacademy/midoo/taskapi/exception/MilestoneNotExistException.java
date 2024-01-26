@@ -1,4 +1,4 @@
 package com.nhnacademy.midoo.taskapi.exception;
 
-public class MilestoneNotExistException extends RuntimeException{
+public class MilestoneNotExistException extends RuntimeException {
 }

@@ -5,7 +5,7 @@ import javax.persistence.*;
 import lombok.*;
 
 @Getter
-@Setter
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
