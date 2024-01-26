@@ -10,7 +10,7 @@ public interface TagService {
 
     Tag createTag(Long projectId, TagRequest request);
 
-    Tag setTag(Long tagId, SetTagRequest request);
+    Tag modifyTag(Long tagId, SetTagRequest request);
 
     String deleteTag(Long tagId);
 }

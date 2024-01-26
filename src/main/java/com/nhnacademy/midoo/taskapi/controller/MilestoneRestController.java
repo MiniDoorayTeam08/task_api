@@ -25,8 +25,8 @@ public class MilestoneRestController {
         return milestoneService.createMilestone(projectId, request);
     }
     @PutMapping("/{milestoneId}")
-    public Milestone setMilestone(@PathVariable Long milestoneId, @RequestBody SetMilestoneRequest request){
-        return milestoneService.setMilestone(milestoneId, request);
+    public Milestone modifyMilestone(@PathVariable Long milestoneId, @RequestBody SetMilestoneRequest request){
+        return milestoneService.modifyMilestone(milestoneId, request);
     }
     @DeleteMapping("/{milestoneId}")
     public String deleteMilestone(@PathVariable Long milestoneId){

@@ -8,13 +8,14 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/tags")
 public class TagRestController {
     private final TagService tagService;
 
     public TagRestController(TagService tagService) {
         this.tagService = tagService;
     }
-    @GetMapping("/{projectId} ")
+    @GetMapping("/{projectId}")
     public List<Tag> getTags(@PathVariable Long projectId){
         return tagService.getTags(projectId);
     }
@@ -23,8 +24,8 @@ public class TagRestController {
         return tagService.createTag(projectId, request);
     }
     @PutMapping("/{tagId}")
-    public Tag setTag(@PathVariable Long tagId, @RequestBody SetTagRequest request){
-        return tagService.setTag(tagId, request);
+    public Tag modifyTag(@PathVariable Long tagId, @RequestBody SetTagRequest request){
+        return tagService.modifyTag(tagId, request);
     }
 
     @DeleteMapping("/{tagId}")

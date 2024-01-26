@@ -13,5 +13,5 @@ public interface MilestoneService {
 
     Milestone createMilestone(Long projectId, MilestoneRequest request);
 
-    Milestone setMilestone(Long milestoneId, SetMilestoneRequest request);
+    Milestone modifyMilestone(Long milestoneId, SetMilestoneRequest request);
 }

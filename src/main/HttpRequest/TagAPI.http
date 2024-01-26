@@ -1,0 +1,36 @@
+GET http://localhost:7070/tags/3
+### 없는 id 검색
+GET http://localhost:7070/tags/0
+
+###
+POST http://localhost:7070/tags/3/register
+Content-Type: application/json;charset=UTF-8
+
+{
+    "name": "test1"
+}
+### 없는 프로젝트에 넣기 에러
+POST http://localhost:7070/tags/0/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "name": "test10"
+}
+### 같은 프로젝트에 같은 이름은 에러
+POST http://localhost:7070/tags/3/register
+Content-Type: application/json;charset=UTF-8
+
+{
+    "name": "test10"
+}
+###
+PUT http://localhost:7070/tags/1
+Content-Type: application/json;charset=UTF-8
+{
+    "name": "test1"
+}
+###
+DELETE http://localhost:7070/tags/0
+
+###
+DELETE http://localhost:7070/tags/6
