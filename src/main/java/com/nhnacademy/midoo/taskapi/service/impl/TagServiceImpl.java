@@ -4,7 +4,7 @@ import com.nhnacademy.midoo.taskapi.domain.SetTagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
-import com.nhnacademy.midoo.taskapi.exception.ProjectNotFoundException;
+import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TagAlreadyExistException;
 import com.nhnacademy.midoo.taskapi.exception.TagNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
@@ -27,7 +27,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public List<Tag> getTags(Long projectId) {
         boolean isExist = projectRepository.existsById(projectId);
-        if(!isExist) throw new ProjectNotFoundException();
+        if (!isExist) throw new ProjectNotExistException();
 
         return tagRepository.findAllByProjectProjectId(projectId);
     }
@@ -35,9 +35,9 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag createTag(Long projectId, TagRequest request) {
         boolean projectIdIsExist = projectRepository.existsById(projectId);
-        if(!projectIdIsExist) throw new ProjectNotFoundException();
+        if (!projectIdIsExist) throw new ProjectNotExistException();
         boolean tagIsExist = tagRepository.findByProjectProjectIdAndTagName(projectId, request.getName()).isEmpty();
-        if(!tagIsExist) throw new TagAlreadyExistException();
+        if (!tagIsExist) throw new TagAlreadyExistException();
 
 
         Project project = projectRepository.getReferenceById(projectId);
@@ -50,11 +50,11 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag modifyTag(Long tagId, SetTagRequest request) {
         boolean isExist = tagRepository.existsById(tagId);
-        if(!isExist) throw new TagNotExistException();
+        if (!isExist) throw new TagNotExistException();
 
-        Tag tag =tagRepository.findById(tagId).orElseThrow(TagNotExistException::new);
+        Tag tag = tagRepository.findById(tagId).orElseThrow(TagNotExistException::new);
         boolean isAlready = tagRepository.findByProjectProjectIdAndTagName(tag.getProject().getProjectId(), request.getName()).isEmpty();
-        if(!isAlready) throw new TagAlreadyExistException();
+        if (!isAlready) throw new TagAlreadyExistException();
 
         tag.setTagName(request.getName());
         return tagRepository.save(tag);
@@ -63,7 +63,7 @@ public class TagServiceImpl implements TagService {
     @Override
     public String deleteTag(Long tagId) {
         boolean isExist = tagRepository.existsById(tagId);
-        if(!isExist) throw new TagNotExistException();
+        if (!isExist) throw new TagNotExistException();
         tagRepository.deleteById(tagId);
         return "tag " + tagId + " : is deleted";
     }
