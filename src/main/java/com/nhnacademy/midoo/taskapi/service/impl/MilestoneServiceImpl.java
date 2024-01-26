@@ -5,7 +5,7 @@ import com.nhnacademy.midoo.taskapi.domain.SetMilestoneRequest;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.exception.MilestoneNotExistException;
-import com.nhnacademy.midoo.taskapi.exception.ProjectNotFoundException;
+import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.MilestoneRepository;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.MilestoneService;
@@ -26,17 +26,14 @@ public class MilestoneServiceImpl implements MilestoneService {
     @Override
     public List<Milestone> getMilestone(Long projectId) {
         boolean isExist = projectRepository.existsById(projectId);
-        if(!isExist) throw new ProjectNotFoundException();
+        if(!isExist) throw new ProjectNotExistException();
 
         return milestoneRepository.findAllByProjectProjectId(projectId);
     }
 
     @Override
     public Milestone createMilestone(Long projectId, MilestoneRequest request) {
-        boolean isExist = projectRepository.existsById(projectId);
-        if(!isExist) throw new ProjectNotFoundException();
-
-        Project project = projectRepository.getReferenceById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotExistException::new);
         Milestone newMilestone = new Milestone();
         newMilestone.setMilestoneName(request.getName());
         newMilestone.setProject(project);
@@ -48,7 +45,7 @@ public class MilestoneServiceImpl implements MilestoneService {
         boolean isExist = milestoneRepository.existsById(milestoneId);
         if(!isExist) throw new MilestoneNotExistException();
 
-        Milestone newMilestone = new Milestone();
+        Milestone newMilestone = milestoneRepository.findById(milestoneId).orElseThrow(MilestoneNotExistException::new);
         newMilestone.setMilestoneName(request.getName());
         return milestoneRepository.save(newMilestone);
     }

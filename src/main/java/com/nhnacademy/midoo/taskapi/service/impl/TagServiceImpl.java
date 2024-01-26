@@ -34,13 +34,10 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public Tag createTag(Long projectId, TagRequest request) {
-        boolean projectIdIsExist = projectRepository.existsById(projectId);
-        if (!projectIdIsExist) throw new ProjectNotExistException();
         boolean tagIsExist = tagRepository.findByProjectProjectIdAndTagName(projectId, request.getName()).isEmpty();
         if (!tagIsExist) throw new TagAlreadyExistException();
 
-
-        Project project = projectRepository.getReferenceById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotExistException::new);
         Tag newTag = new Tag();
         newTag.setTagName(request.getName());
         newTag.setProject(project);

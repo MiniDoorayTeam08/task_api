@@ -5,10 +5,11 @@ import com.nhnacademy.midoo.taskapi.domain.SetMilestoneRequest;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.service.MilestoneService;
 import java.util.List;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/milestones")
+@RequestMapping(value = "/milestones", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MilestoneRestController {
     private final MilestoneService milestoneService;
 
