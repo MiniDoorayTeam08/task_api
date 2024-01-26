@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,17 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/comments",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/comments", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CommentRestController {
     private final CommentService commentService;
 
     @GetMapping("/{taskId}")
-    public List<CommentResponse> getComments(@PathVariable Long taskId){
+    public List<CommentResponse> getComments(@PathVariable Long taskId) {
         return commentService.getComments(taskId);
     }
 
     @GetMapping("/{commentId}/comment")
-    public CommentResponse getComment(@PathVariable Long commentId){
+    public CommentResponse getComment(@PathVariable Long commentId) {
         return commentService.getComment(commentId);
     }
 
@@ -41,7 +40,7 @@ public class CommentRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public CommentResponse registerComment(@PathVariable Long taskId,
                                            @Valid @RequestBody CommentRequest commentRequest,
-                                           BindingResult bindingResult){
+                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
@@ -51,7 +50,7 @@ public class CommentRestController {
     @PutMapping("/{commentId}")
     public CommentResponse modifyComment(@PathVariable Long commentId,
                                          @Valid @RequestBody CommentRequest commentRequest,
-                                         BindingResult bindingResult){
+                                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
@@ -59,7 +58,7 @@ public class CommentRestController {
     }
 
     @DeleteMapping("/{commentId}")
-    public void deleteComment(@PathVariable Long commentId){
+    public void deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
     }
 }

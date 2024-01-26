@@ -1,0 +1,9 @@
+POST http://localhost:7070/milestones/3/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "name": "release3"
+}
+
+###
+GET http://localhost:7070/

@@ -22,7 +22,7 @@ public class CommentResponse {
     private String commentContent;
 
     @NotNull
-    private Task task;
+    private Long taskId;
 
     @NotBlank
     @Size(max = 50)
@@ -32,7 +32,7 @@ public class CommentResponse {
         return CommentResponse.builder()
                 .commentId(comment.getCommentId())
                 .commentContent(comment.getCommentContent())
-                .task(comment.getTask())
+                .taskId(comment.getTask().getTaskId())
                 .accountId(comment.getAccountId())
                 .build();
     }

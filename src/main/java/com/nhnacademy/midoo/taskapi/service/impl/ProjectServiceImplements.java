@@ -3,7 +3,7 @@ package com.nhnacademy.midoo.taskapi.service.impl;
 import com.nhnacademy.midoo.taskapi.domain.ProjectRequest;
 import com.nhnacademy.midoo.taskapi.domain.ProjectResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
-import com.nhnacademy.midoo.taskapi.exception.ProjectNotFoundException;
+import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.ProjectService;
 import java.util.List;
@@ -22,7 +22,7 @@ public class ProjectServiceImplements implements ProjectService {
     @Override
     @Transactional(readOnly = true)
     public ProjectResponse getProject(Long id) {
-        return ProjectResponse.fromEntity(projectRepository.findById(id).orElseThrow(ProjectNotFoundException::new));
+        return ProjectResponse.fromEntity(projectRepository.findById(id).orElseThrow(ProjectNotExistException::new));
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ProjectServiceImplements implements ProjectService {
     public List<ProjectResponse> getProjects(String accountId) {
         List<Project> projects = projectRepository.findByAccountId(accountId);
         if(projects.isEmpty()){
-            throw new ProjectNotFoundException();
+            throw new ProjectNotExistException();
         }
         return projects.stream().map(ProjectResponse::fromEntity).collect(Collectors.toList());
     }
@@ -42,14 +42,14 @@ public class ProjectServiceImplements implements ProjectService {
         return ProjectResponse.fromEntity(projectRepository.save(project));
     }
 
-    // TODO : modify용 projectRequest만들기
+    // TODO : modify는 나중에 수정 더 하기! => 어떤 것만 수정할지 정해야할 것 같음..
     @Override
     @Transactional
     public ProjectResponse modifyProject(Long id, ProjectRequest projectRequest) {
         Optional<Project> changeProject = projectRepository.findById(id);
 
         if(changeProject.isEmpty()){
-            throw new ProjectNotFoundException();
+            throw new ProjectNotExistException();
         }
 
         Project project = ProjectRequest.toEntity(projectRequest);
@@ -67,7 +67,7 @@ public class ProjectServiceImplements implements ProjectService {
     @Transactional
     public void deleteProject(Long id) {
         if(!projectRepository.existsById(id)) {
-            throw new ProjectNotFoundException();
+            throw new ProjectNotExistException();
         }
         projectRepository.deleteById(id);
     }
