@@ -1,6 +1,7 @@
 package com.nhnacademy.midoo.taskapi.domain;
 
 import com.nhnacademy.midoo.taskapi.entity.Project;
+import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,8 @@ public class ProjectRequest {
 
     @Size(max = 300)
     String projectStatus;
+
+    List<String> projectMemberIdList;
 
     public static Project toEntity(ProjectRequest projectRequest) {
         return Project.builder()

@@ -3,7 +3,9 @@ package com.nhnacademy.midoo.taskapi.service.impl;
 import com.nhnacademy.midoo.taskapi.domain.ProjectRequest;
 import com.nhnacademy.midoo.taskapi.domain.ProjectResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
+import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
+import com.nhnacademy.midoo.taskapi.repository.ProjectMemberRepository;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.ProjectService;
 import java.util.List;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ProjectServiceImplements implements ProjectService {
     private final ProjectRepository projectRepository;
+    private final ProjectMemberRepository projectMemberRepository;
+
     @Override
     @Transactional(readOnly = true)
     public ProjectResponse getProject(Long id) {
@@ -35,8 +39,17 @@ public class ProjectServiceImplements implements ProjectService {
     @Override
     @Transactional
     public ProjectResponse createProject(ProjectRequest projectRequest) {
-        Project project = ProjectRequest.toEntity(projectRequest);
-        return ProjectResponse.fromEntity(projectRepository.save(project));
+        Project project = projectRepository.save(ProjectRequest.toEntity(projectRequest));
+        projectRequest.getProjectMemberIdList().forEach(
+                memberId -> projectMemberRepository.save(
+                        ProjectMember.builder()
+                                .pk(new ProjectMember.Pk(memberId, project.getProjectId()))
+                                .project(project)
+                                .build()
+                )
+        );
+
+        return ProjectResponse.fromEntity(project);
     }
 
     // TODO : modify는 나중에 수정 더 하기! => 어떤 것만 수정할지 정해야할 것 같음..
