@@ -29,9 +29,6 @@ public class ProjectServiceImplements implements ProjectService {
     @Transactional(readOnly = true)
     public List<ProjectResponse> getProjects(String accountId) {
         List<Project> projects = projectRepository.findByAccountId(accountId);
-        if(projects.isEmpty()){
-            throw new ProjectNotExistException();
-        }
         return projects.stream().map(ProjectResponse::fromEntity).collect(Collectors.toList());
     }
 

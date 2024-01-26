@@ -17,17 +17,17 @@ import lombok.Value;
 @Getter
 public class CommentResponse {
     @NotNull
-    private Long commentId;
+    Long commentId;
 
     @NotBlank
-    private String commentContent;
+    String commentContent;
 
     @NotNull
-    private Long taskId;
+    Long taskId;
 
     @NotBlank
     @Size(max = 50)
-    private String accountId;
+    String accountId;
 
     public static CommentResponse fromEntity(Comment comment) {
         return CommentResponse.builder()
