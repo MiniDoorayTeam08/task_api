@@ -28,7 +28,7 @@ public class TagRestController {
     public List<TagResponse> getTags(@PathVariable Long projectId) {
         return tagService.getTags(projectId);
     }
-    @GetMapping("/{tagId}/tagId ")
+    @GetMapping("/{tagId}/tagId")
     public TagDto getTag(@PathVariable Long tagId){
         return tagService.getTag(tagId);
     }
