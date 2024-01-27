@@ -1,5 +1,6 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
+import com.nhnacademy.midoo.taskapi.domain.MilestoneDto;
 import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
 import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
@@ -61,8 +62,8 @@ public class MilestoneServiceImpl implements MilestoneService {
     }
 
     @Override
-    public Milestone getMilestone(Long milestoneID) {
-        return milestoneRepository.findById(milestoneID).orElseThrow(MilestoneNotExistException::new);
+    public MilestoneDto getMilestone(Long milestoneID) {
+        return milestoneRepository.findByMilestoneId(milestoneID).orElseThrow(MilestoneNotExistException::new);
     }
 
 

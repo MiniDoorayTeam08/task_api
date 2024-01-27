@@ -1,5 +1,6 @@
 package com.nhnacademy.midoo.taskapi.controller;
 
+import com.nhnacademy.midoo.taskapi.domain.MilestoneDto;
 import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
 import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
@@ -32,7 +33,7 @@ public class MilestoneRestController {
         return milestoneService.getMilestones(projectId);
     }
     @GetMapping("/{milestoneID}/milestoneId")
-    public Milestone getMilestone(@PathVariable Long milestoneID){
+    public MilestoneDto getMilestone(@PathVariable Long milestoneID){
         return milestoneService.getMilestone(milestoneID);
     }
 

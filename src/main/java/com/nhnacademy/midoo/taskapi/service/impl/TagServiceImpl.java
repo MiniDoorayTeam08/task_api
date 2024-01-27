@@ -1,5 +1,6 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
+import com.nhnacademy.midoo.taskapi.domain.TagDto;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
@@ -63,4 +64,11 @@ public class TagServiceImpl implements TagService {
     public void deleteTag(Long tagId) {
         tagRepository.deleteById(tagId);
     }
+
+    @Override
+    public TagDto getTag(Long tagId) {
+        return tagRepository.findByTagId(tagId).orElseThrow(TagNotExistException::new);
+    }
+
+
 }
