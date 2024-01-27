@@ -1,10 +1,6 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
-import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
-import com.nhnacademy.midoo.taskapi.domain.ProjectRequest;
-import com.nhnacademy.midoo.taskapi.domain.TagResponse;
-import com.nhnacademy.midoo.taskapi.domain.TaskRequest;
-import com.nhnacademy.midoo.taskapi.domain.TaskResponse;
+import com.nhnacademy.midoo.taskapi.domain.*;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
@@ -14,11 +10,7 @@ import com.nhnacademy.midoo.taskapi.entity.TaskTag;
 import com.nhnacademy.midoo.taskapi.exception.MilestoneNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TaskNotExistException;
-import com.nhnacademy.midoo.taskapi.repository.MilestoneRepository;
-import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
-import com.nhnacademy.midoo.taskapi.repository.TagRepository;
-import com.nhnacademy.midoo.taskapi.repository.TaskRepository;
-import com.nhnacademy.midoo.taskapi.repository.TaskTagRepository;
+import com.nhnacademy.midoo.taskapi.repository.*;
 import com.nhnacademy.midoo.taskapi.service.TaskService;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +30,7 @@ public class TaskServiceImplementation implements TaskService {
     private final TagRepository tagRepository;
     private final TaskRepository taskRepository;
     private final TaskTagRepository taskTagRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -116,5 +109,15 @@ public class TaskServiceImplementation implements TaskService {
             throw new TaskNotExistException();
         }
         taskRepository.deleteById(taskId);
+    }
+
+    @Override
+    @Transactional
+    public TaskDetailResponse getTask(Long taskId) {
+        TaskDto task = taskRepository.findByTaskId(taskId).orElseThrow(TaskNotExistException::new);
+        List<CommentDto> comment = commentRepository.findAllByTask_TaskId(taskId);
+        List<TagDto> tag = tagRepository.findAllBy(taskId);
+
+        return new TaskDetailResponse(task, tag, comment);
     }
 }
