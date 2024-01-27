@@ -9,6 +9,7 @@ import com.nhnacademy.midoo.taskapi.repository.ProjectMemberRepository;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.ProjectService;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class ProjectServiceImplements implements ProjectService {
     public List<ProjectResponse> getProjects(String accountId) {
         List<ProjectMember> projectMembers = projectMemberRepository.findByPk_AccountId(accountId);
         List<Project> projects = projectMembers.stream().map(ProjectMember::getProject).collect(Collectors.toList());
+
         return projects.stream().map(ProjectResponse::fromEntity).collect(Collectors.toList());
     }
 
@@ -48,7 +50,15 @@ public class ProjectServiceImplements implements ProjectService {
     @Transactional
     public ProjectResponse createProject(ProjectRequest projectRequest) {
         Project project = projectRepository.save(ProjectRequest.toEntity(projectRequest));
-        projectRequest.getProjectMemberIdList().add(projectRequest.getAccountId());
+        projectMemberRepository.save(
+                ProjectMember.builder()
+                        .pk(new ProjectMember.Pk(projectRequest.getAccountId(), project.getProjectId()))
+                        .project(project)
+                        .build()
+        );
+        if(Objects.isNull(projectRequest.getProjectMemberIdList()) || projectRequest.getProjectMemberIdList().isEmpty()){
+            return ProjectResponse.fromEntity(project);
+        }
         projectRequest.getProjectMemberIdList().forEach(
                 memberId -> projectMemberRepository.save(
                         ProjectMember.builder()
@@ -57,7 +67,6 @@ public class ProjectServiceImplements implements ProjectService {
                                 .build()
                 )
         );
-
         return ProjectResponse.fromEntity(project);
     }
 

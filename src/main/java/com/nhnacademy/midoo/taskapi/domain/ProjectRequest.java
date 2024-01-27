@@ -1,6 +1,7 @@
 package com.nhnacademy.midoo.taskapi.domain;
 
 import com.nhnacademy.midoo.taskapi.entity.Project;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
