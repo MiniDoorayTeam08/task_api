@@ -5,12 +5,12 @@ import com.nhnacademy.midoo.taskapi.domain.ProjectResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
-import com.nhnacademy.midoo.taskapi.repository.ProjectMemberRepository;
+import com.nhnacademy.midoo.taskapi.domain.ProjectMemberRepository;
+import com.nhnacademy.midoo.taskapi.repository.ProjectMemberOfPkResponse;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.ProjectService;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +56,7 @@ public class ProjectServiceImplements implements ProjectService {
                         .project(project)
                         .build()
         );
-        if(Objects.isNull(projectRequest.getProjectMemberIdList()) || projectRequest.getProjectMemberIdList().isEmpty()){
+        if(projectRequest.getProjectMemberIdList().isEmpty()){
             return ProjectResponse.fromEntity(project);
         }
         projectRequest.getProjectMemberIdList().forEach(
@@ -74,20 +74,41 @@ public class ProjectServiceImplements implements ProjectService {
     @Override
     @Transactional
     public ProjectResponse modifyProject(Long id, ProjectRequest projectRequest) {
-        Optional<Project> changeProject = projectRepository.findById(id);
+        List<ProjectMemberOfPkResponse> projectMembers = projectMemberRepository.findByPk_ProjectId(id);
 
-        if(changeProject.isEmpty()){
-            throw new ProjectNotExistException();
-        }
+        projectMembers.stream().forEach(projectMember ->
+                projectMemberRepository.deleteById(projectMember.getPk()));
+
+        Project changeProject = projectRepository.findById(id).orElseThrow(ProjectNotExistException::new);
 
         Project project = ProjectRequest.toEntity(projectRequest);
-        Project resultProject = changeProject.get().toBuilder()
+        Project resultProject = changeProject.toBuilder()
                 .projectName(project.getProjectName())
                 .projectExplain(project.getProjectExplain())
                 .projectStatus(project.getProjectStatus())
                 .build();
 
         projectRepository.save(resultProject);
+        projectMemberRepository.save(
+                ProjectMember.builder()
+                        .pk(new ProjectMember.Pk(resultProject.getAccountId(), project.getProjectId()))
+                        .project(project)
+                        .build()
+        );
+
+        if(projectRequest.getProjectMemberIdList().isEmpty()){
+            return ProjectResponse.fromEntity(project);
+        }
+
+        projectRequest.getProjectMemberIdList().forEach(
+                memberId -> projectMemberRepository.save(
+                        ProjectMember.builder()
+                                .pk(new ProjectMember.Pk(memberId, project.getProjectId()))
+                                .project(project)
+                                .build()
+                )
+        );
+
         return ProjectResponse.fromEntity(resultProject);
     }
 

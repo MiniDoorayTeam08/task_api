@@ -33,7 +33,8 @@ public class ProjectRequest {
     @Size(max = 300)
     String projectStatus;
 
-    List<String> projectMemberIdList;
+    @Builder.Default
+    List<String> projectMemberIdList = new ArrayList<>();
 
     public static Project toEntity(ProjectRequest projectRequest) {
         return Project.builder()

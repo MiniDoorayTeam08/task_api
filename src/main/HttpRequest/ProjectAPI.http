@@ -9,22 +9,41 @@ POST http://localhost:7070/projects/register
 Content-Type: application/json;charset=UTF-8
 
 {
-  "accountId":"test",
+  "accountId":"suyeon",
   "projectName":"project4",
   "projectExplain":"project is good",
   "projectStatus":"활성",
-  "projectMemberIdList": []
+  "projectMemberIdList": [
+    "user1",
+    "user2",
+    "user3"
+  ]
 }
 
 ###
-PUT http://localhost:7070/projects/1
+POST http://localhost:7070/projects/register
 Content-Type: application/json;charset=UTF-8
 
 {
   "accountId":"suyeon",
   "projectName":"project4",
-  "projectExplain":"수정이 습니다.",
+  "projectExplain":"project is good",
   "projectStatus":"활성"
+}
+
+###
+PUT http://localhost:7070/projects/42
+Content-Type: application/json;charset=UTF-8
+
+{
+  "accountId":"suyeon",
+  "projectName":"project4",
+  "projectExplain":"수정",
+  "projectStatus":"활성",
+  "projectMemberIdList": [
+    "updateUser1",
+    "updateUser2"
+  ]
 }
 
 ###

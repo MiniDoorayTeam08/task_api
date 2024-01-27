@@ -1,9 +1,12 @@
-package com.nhnacademy.midoo.taskapi.repository;
+package com.nhnacademy.midoo.taskapi.domain;
 
 import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
+import com.nhnacademy.midoo.taskapi.repository.ProjectMemberOfPkResponse;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, ProjectMember.Pk> {
     List<ProjectMember> findByPk_AccountId(String accountId);
+
+    List<ProjectMemberOfPkResponse> findByPk_ProjectId(Long projectId);
 }

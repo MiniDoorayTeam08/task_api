@@ -2,50 +2,45 @@ POST http://localhost:7070/tasks/register
 Content-Type: application/json;charset=UTF-8
 
 {
-  "taskTitle": "테스크와 태크도 같이?!",
+  "taskTitle": "태그와 마일스톤",
   "taskContent": "화이팅",
-  "project": {
-    "projectId": 3,
-    "accountId": "suyeon",
-    "projectName": "project3",
-    "projectExplain": "project is good",
-    "projectStatus": "활성"
-  },
-  "tagList": [
-    {
-      "tagId":1,
-      "tagName": "NHN Academy",
-      "project": {
-        "projectId": 3,
-        "accountId": "suyeon",
-        "projectName": "project3",
-        "projectExplain": "project is good",
-        "projectStatus": "활성"
-      }
-    }, {
-      "tagId":2,
-      "tagName": "NHN Academy",
-      "project": {
-        "projectId": 3,
-        "accountId": "suyeon",
-        "projectName": "project3",
-        "projectExplain": "project is good",
-        "projectStatus": "활성"
-      }
-    }
-  ],
-  "milestone": {
-    "milestoneId": 7,
-    "milestoneName": "release3",
-    "project": {
-      "projectId": 3,
-      "accountId": "suyeon",
-      "projectName": "project3",
-      "projectExplain": "project is good",
-      "projectStatus": "활성",
-      "projectMembers": []
-    }
-  },
+  "projectId": 3,
+  "tagListId": [1, 2],
+  "milestoneId": 21,
+  "accountId": "suyeon"
+}
+### tag 없는 경우
+POST http://localhost:7070/tasks/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "taskTitle": "태그가 없음",
+  "taskContent": "화이팅",
+  "projectId": 3,
+  "milestoneId": 1,
+  "accountId": "suyeon"
+}
+
+### milestone없는 경우
+POST http://localhost:7070/tasks/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "taskTitle": "마일스톤 없음",
+  "taskContent": "화이팅",
+  "projectId": 3,
+  "tagListId": [10, 11],
+  "accountId": "suyeon"
+}
+
+### 둘 다 없는 경우
+POST http://localhost:7070/tasks/register
+Content-Type: application/json;charset=UTF-8
+
+{
+  "taskTitle": "태그와 마일스토 없는 경우",
+  "taskContent": "화이팅",
+  "projectId": 10,
   "accountId": "suyeon"
 }
 
@@ -68,7 +63,6 @@ Content-Type: application/json;charset=UTF-8
       "projectStatus": "활성",
       "projectMembers": []
     },
-    "milestone": null,
     "accountId": "suyeon"
   }
 

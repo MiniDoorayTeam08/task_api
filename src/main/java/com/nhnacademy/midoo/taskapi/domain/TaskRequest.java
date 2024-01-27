@@ -27,21 +27,23 @@ public class TaskRequest {
 
     @NotBlank String taskContent;
 
-    @NotNull Project project;
+    @NotNull Long projectId;
 
-    Milestone milestone;
+    @Builder.Default
+    Long milestoneId = 0L;
 
-    List<Tag> tagList = new ArrayList<>();
+    @Builder.Default
+    List<Long> tagListId = new ArrayList<>();
 
     @NotBlank
     @Size(max = 50) String accountId;
 
-    public static Task toEntity(TaskRequest taskRequest) {
+    public static Task toEntity(TaskRequest taskRequest, Project project, Milestone milestone) {
         return Task.builder()
                 .taskTitle(taskRequest.getTaskTitle())
                 .taskContent(taskRequest.getTaskContent())
-                .project(taskRequest.getProject())
-                .milestone(taskRequest.getMilestone())
+                .project(project)
+                .milestone(milestone)
                 .accountId(taskRequest.getAccountId())
                 .build();
     }
