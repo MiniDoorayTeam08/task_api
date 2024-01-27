@@ -1,16 +1,15 @@
 package com.nhnacademy.midoo.taskapi.service;
 
-import com.nhnacademy.midoo.taskapi.domain.SetTagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
-import com.nhnacademy.midoo.taskapi.entity.Tag;
+import com.nhnacademy.midoo.taskapi.domain.TagResponse;
 import java.util.List;
 
 public interface TagService {
-    List<Tag> getTags(Long projectId);
+    List<TagResponse> getTags(Long projectId);
 
-    Tag createTag(Long projectId, TagRequest request);
+    TagResponse createTag(Long projectId, TagRequest request);
 
-    Tag modifyTag(Long tagId, SetTagRequest request);
+    TagResponse modifyTag(Long tagId, TagRequest request);
 
-    String deleteTag(Long tagId);
+    void deleteTag(Long tagId);
 }

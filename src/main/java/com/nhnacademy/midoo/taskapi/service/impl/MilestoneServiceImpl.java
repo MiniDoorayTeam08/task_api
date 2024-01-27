@@ -49,9 +49,13 @@ public class MilestoneServiceImpl implements MilestoneService {
     @Override
     @Transactional
     public MilestoneResponse modifyMilestone(Long milestoneId, MilestoneRequest request) {
-        Milestone milestone = milestoneRepository.findById(milestoneId).orElseThrow(MilestoneNotExistException::new);
+        Milestone changeMilestone = milestoneRepository.findById(milestoneId).orElseThrow(MilestoneNotExistException::new);
 
-        return MilestoneResponse.fromEntity(milestoneRepository.save(MilestoneRequest.toEntity(request, milestone.getProject())));
+        Milestone milestone = MilestoneRequest.toEntity(request, changeMilestone.getProject());
+        Milestone resultMilestone = changeMilestone.toBuilder().milestoneName(milestone.getMilestoneName()).build();
+
+        milestoneRepository.save(resultMilestone);
+        return MilestoneResponse.fromEntity(resultMilestone);
     }
 
 

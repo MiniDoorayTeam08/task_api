@@ -1,11 +1,17 @@
 package com.nhnacademy.midoo.taskapi.controller;
 
-import com.nhnacademy.midoo.taskapi.domain.SetTagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
-import com.nhnacademy.midoo.taskapi.entity.Tag;
+import com.nhnacademy.midoo.taskapi.domain.TagResponse;
 import com.nhnacademy.midoo.taskapi.service.TagService;
 import java.util.List;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/tags")
@@ -15,21 +21,24 @@ public class TagRestController {
     public TagRestController(TagService tagService) {
         this.tagService = tagService;
     }
+
     @GetMapping("/{projectId}")
-    public List<Tag> getTags(@PathVariable Long projectId){
+    public List<TagResponse> getTags(@PathVariable Long projectId) {
         return tagService.getTags(projectId);
     }
+
     @PostMapping("/{projectId}/register")
-    public Tag createTag(@PathVariable Long projectId, @RequestBody TagRequest request){
+    public TagResponse createTag(@PathVariable Long projectId, @RequestBody TagRequest request) {
         return tagService.createTag(projectId, request);
     }
+
     @PutMapping("/{tagId}")
-    public Tag modifyTag(@PathVariable Long tagId, @RequestBody SetTagRequest request){
+    public TagResponse modifyTag(@PathVariable Long tagId, @RequestBody TagRequest request) {
         return tagService.modifyTag(tagId, request);
     }
 
     @DeleteMapping("/{tagId}")
-    public String deleteTag(@PathVariable Long tagId){
-        return tagService.deleteTag(tagId);
+    public void deleteTag(@PathVariable Long tagId) {
+        tagService.deleteTag(tagId);
     }
 }

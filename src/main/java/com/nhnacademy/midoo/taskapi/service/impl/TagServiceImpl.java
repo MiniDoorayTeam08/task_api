@@ -1,7 +1,7 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
-import com.nhnacademy.midoo.taskapi.domain.SetTagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
+import com.nhnacademy.midoo.taskapi.domain.TagResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
@@ -11,7 +11,9 @@ import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.repository.TagRepository;
 import com.nhnacademy.midoo.taskapi.service.TagService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -25,43 +27,40 @@ public class TagServiceImpl implements TagService {
 
 
     @Override
-    public List<Tag> getTags(Long projectId) {
+    @Transactional(readOnly = true)
+    public List<TagResponse> getTags(Long projectId) {
         boolean isExist = projectRepository.existsById(projectId);
-        if (!isExist) throw new ProjectNotExistException();
+        if (!isExist) {
+            throw new ProjectNotExistException();
+        }
 
-        return tagRepository.findAllByProjectProjectId(projectId);
+        return tagRepository.findAllByProjectProjectId(projectId).stream()
+                .map(TagResponse::fromEntity).collect(Collectors.toList());
     }
 
     @Override
-    public Tag createTag(Long projectId, TagRequest request) {
-        boolean tagIsExist = tagRepository.findByProjectProjectIdAndTagName(projectId, request.getName()).isEmpty();
-        if (!tagIsExist) throw new TagAlreadyExistException();
-
+    @Transactional
+    public TagResponse createTag(Long projectId, TagRequest request) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotExistException::new);
-        Tag newTag = new Tag();
-        newTag.setTagName(request.getName());
-        newTag.setProject(project);
-        return tagRepository.save(newTag);
+
+        return TagResponse.fromEntity(tagRepository.save(TagRequest.toEntity(request, project)));
     }
 
     @Override
-    public Tag modifyTag(Long tagId, SetTagRequest request) {
-        boolean isExist = tagRepository.existsById(tagId);
-        if (!isExist) throw new TagNotExistException();
+    @Transactional
+    public TagResponse modifyTag(Long tagId, TagRequest request) {
+        Tag changeTag = tagRepository.findById(tagId).orElseThrow(TagNotExistException::new);
 
-        Tag tag = tagRepository.findById(tagId).orElseThrow(TagNotExistException::new);
-        boolean isAlready = tagRepository.findByProjectProjectIdAndTagName(tag.getProject().getProjectId(), request.getName()).isEmpty();
-        if (!isAlready) throw new TagAlreadyExistException();
+        Tag tag = TagRequest.toEntity(request, changeTag.getProject());
+        Tag resultTag = changeTag.toBuilder().tagName(tag.getTagName()).build();
+        tagRepository.save(resultTag);
 
-        tag.setTagName(request.getName());
-        return tagRepository.save(tag);
+        return TagResponse.fromEntity(resultTag);
     }
 
     @Override
-    public String deleteTag(Long tagId) {
-        boolean isExist = tagRepository.existsById(tagId);
-        if (!isExist) throw new TagNotExistException();
+    @Transactional
+    public void deleteTag(Long tagId) {
         tagRepository.deleteById(tagId);
-        return "tag " + tagId + " : is deleted";
     }
 }

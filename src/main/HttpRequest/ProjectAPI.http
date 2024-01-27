@@ -1,23 +1,19 @@
 ###
-GET http://localhost:7070/projects/2
+GET http://localhost:7070/projects/3
 
 ###
-GET http://localhost:7070/projects/myprojects/new
+GET http://localhost:7070/projects/myprojects/test
 
 ###
 POST http://localhost:7070/projects/register
 Content-Type: application/json;charset=UTF-8
 
 {
-  "accountId":"new",
+  "accountId":"test",
   "projectName":"project4",
   "projectExplain":"project is good",
   "projectStatus":"활성",
-  "projectMemberIdList": [
-    "hi",
-    "hello",
-    "newUser"
-  ]
+  "projectMemberIdList": []
 }
 
 ###
@@ -27,7 +23,7 @@ Content-Type: application/json;charset=UTF-8
 {
   "accountId":"suyeon",
   "projectName":"project4",
-  "projectExplain":"수정이 완료되었습니다.",
+  "projectExplain":"수정이 습니다.",
   "projectStatus":"활성"
 }
 

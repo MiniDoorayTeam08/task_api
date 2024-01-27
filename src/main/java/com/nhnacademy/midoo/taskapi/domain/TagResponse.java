@@ -3,13 +3,16 @@ package com.nhnacademy.midoo.taskapi.domain;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
-@Value
-@Builder
-@AllArgsConstructor
 @Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TagResponse {
     Long tagId;
     String tagName;

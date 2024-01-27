@@ -4,6 +4,7 @@ import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.entity.Task;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -30,7 +31,7 @@ public class TaskRequest {
 
     Milestone milestone;
 
-    List<Tag> tagList;
+    List<Tag> tagList = new ArrayList<>();
 
     @NotBlank
     @Size(max = 50) String accountId;

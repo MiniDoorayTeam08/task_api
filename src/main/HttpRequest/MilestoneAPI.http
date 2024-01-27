@@ -7,3 +7,6 @@ Content-Type: application/json;charset=UTF-8
 
 ###
 GET http://localhost:7070/milestones/3
+
+###
+#GET
