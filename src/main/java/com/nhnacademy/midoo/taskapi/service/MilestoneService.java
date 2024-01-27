@@ -1,17 +1,16 @@
 package com.nhnacademy.midoo.taskapi.service;
 
 import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
-import com.nhnacademy.midoo.taskapi.domain.SetMilestoneRequest;
-import com.nhnacademy.midoo.taskapi.entity.Milestone;
+import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
 import java.util.List;
 
 
 public interface MilestoneService {
-    List<Milestone> getMilestone(Long projectId);
+    List<MilestoneResponse> getMilestone(Long projectId);
 
-    String deleteMilestone(Long milestoneId);
+    void deleteMilestone(Long milestoneId);
 
-    Milestone createMilestone(Long projectId, MilestoneRequest request);
+    MilestoneResponse createMilestone(Long projectId, MilestoneRequest request);
 
-    Milestone modifyMilestone(Long milestoneId, SetMilestoneRequest request);
+    MilestoneResponse modifyMilestone(Long milestoneId, MilestoneRequest request);
 }

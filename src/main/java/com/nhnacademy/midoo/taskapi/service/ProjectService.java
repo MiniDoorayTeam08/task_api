@@ -7,7 +7,9 @@ import java.util.List;
 public interface ProjectService {
     ProjectResponse getProject(Long id);
 
-    List<ProjectResponse>   getProjects(String accountId);
+    List<ProjectResponse> getProjects(String accountId);
+
+    List<ProjectResponse> getProjectAdmin(String accountId);
 
     ProjectResponse createProject(ProjectRequest projectRequest);
 

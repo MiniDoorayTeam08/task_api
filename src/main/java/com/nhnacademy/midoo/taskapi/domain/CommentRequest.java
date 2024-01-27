@@ -12,9 +12,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
-@Value
-@Builder
 @Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CommentRequest {
     @NotBlank
     String commentContent;

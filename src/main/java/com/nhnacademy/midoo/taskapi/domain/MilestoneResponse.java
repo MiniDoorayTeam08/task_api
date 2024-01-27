@@ -9,12 +9,14 @@ import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Data
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MilestoneResponse {
     @NotNull
     private Long milestoneId;
@@ -26,8 +28,6 @@ public class MilestoneResponse {
     private Long projectId;
 
     public static MilestoneResponse fromEntity(Milestone milestone) {
-        if(Objects.isNull(milestone))
-            return null;
         return MilestoneResponse.builder()
                 .milestoneId(milestone.getMilestoneId())
                 .milestoneName(milestone.getMilestoneName())

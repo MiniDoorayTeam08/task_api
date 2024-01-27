@@ -1,7 +1,7 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
 import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
-import com.nhnacademy.midoo.taskapi.domain.SetMilestoneRequest;
+import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.exception.MilestoneNotExistException;
@@ -10,7 +10,9 @@ import com.nhnacademy.midoo.taskapi.repository.MilestoneRepository;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.MilestoneService;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MilestoneServiceImpl implements MilestoneService {
@@ -24,45 +26,43 @@ public class MilestoneServiceImpl implements MilestoneService {
 
 
     @Override
-    public List<Milestone> getMilestone(Long projectId) {
+    @Transactional(readOnly = true)
+    public List<MilestoneResponse> getMilestone(Long projectId) {
         boolean isExist = projectRepository.existsById(projectId);
         if (!isExist) {
             throw new ProjectNotExistException();
         }
 
-        return milestoneRepository.findAllByProjectProjectId(projectId);
+        return milestoneRepository.findAllByProjectProjectId(projectId)
+                .stream().map(MilestoneResponse::fromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Milestone createMilestone(Long projectId, MilestoneRequest request) {
+    @Transactional
+    public MilestoneResponse createMilestone(Long projectId, MilestoneRequest request) {
         Project project = projectRepository.findById(projectId).orElseThrow(ProjectNotExistException::new);
-        Milestone newMilestone = new Milestone();
-        newMilestone.setMilestoneName(request.getName());
-        newMilestone.setProject(project);
-        return milestoneRepository.save(newMilestone);
+
+        return MilestoneResponse.fromEntity(milestoneRepository.save(MilestoneRequest.toEntity(request, project)));
     }
 
     @Override
-    public Milestone modifyMilestone(Long milestoneId, SetMilestoneRequest request) {
-        boolean isExist = milestoneRepository.existsById(milestoneId);
-        if (!isExist) {
-            throw new MilestoneNotExistException();
-        }
+    @Transactional
+    public MilestoneResponse modifyMilestone(Long milestoneId, MilestoneRequest request) {
+        Milestone milestone = milestoneRepository.findById(milestoneId).orElseThrow(MilestoneNotExistException::new);
 
-        Milestone newMilestone = new Milestone();
-        newMilestone.setMilestoneName(request.getName());
-        return milestoneRepository.save(newMilestone);
+        return MilestoneResponse.fromEntity(milestoneRepository.save(MilestoneRequest.toEntity(request, milestone.getProject())));
     }
 
 
     @Override
-    public String deleteMilestone(Long milestoneId) {
+    @Transactional
+    public void deleteMilestone(Long milestoneId) {
         boolean isExist = milestoneRepository.existsById(milestoneId);
         if (!isExist) {
             throw new MilestoneNotExistException();
         }
         milestoneRepository.deleteById(milestoneId);
-        return "milestone " + milestoneId + " : is deleted";
     }
 
 

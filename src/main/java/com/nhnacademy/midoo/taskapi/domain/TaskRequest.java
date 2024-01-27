@@ -15,9 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Value;
 
-@Value
-@Builder
 @Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class TaskRequest {
     @NotBlank
     @Size(max = 100) String taskTitle;

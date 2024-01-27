@@ -31,9 +31,6 @@ public class TaskServiceImplementation implements TaskService {
     @Transactional(readOnly = true)
     public List<TaskResponse> getTasks(Long projectId) {
         List<Task> tasks = taskRepository.findByProject_ProjectId(projectId);
-        if (tasks.isEmpty()) {
-            throw new TaskNotExistException();
-        }
         return tasks.stream().map(TaskResponse::fromEntity).collect(Collectors.toList());
     }
 

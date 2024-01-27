@@ -32,6 +32,14 @@ public class ProjectServiceImplements implements ProjectService {
     @Override
     @Transactional(readOnly = true)
     public List<ProjectResponse> getProjects(String accountId) {
+        List<ProjectMember> projectMembers = projectMemberRepository.findByPk_AccountId(accountId);
+        List<Project> projects = projectMembers.stream().map(ProjectMember::getProject).collect(Collectors.toList());
+        return projects.stream().map(ProjectResponse::fromEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProjectResponse> getProjectAdmin(String accountId) {
         List<Project> projects = projectRepository.findByAccountId(accountId);
         return projects.stream().map(ProjectResponse::fromEntity).collect(Collectors.toList());
     }
@@ -40,6 +48,7 @@ public class ProjectServiceImplements implements ProjectService {
     @Transactional
     public ProjectResponse createProject(ProjectRequest projectRequest) {
         Project project = projectRepository.save(ProjectRequest.toEntity(projectRequest));
+        projectRequest.getProjectMemberIdList().add(projectRequest.getAccountId());
         projectRequest.getProjectMemberIdList().forEach(
                 memberId -> projectMemberRepository.save(
                         ProjectMember.builder()
