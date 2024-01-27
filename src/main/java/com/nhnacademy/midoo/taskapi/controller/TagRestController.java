@@ -1,7 +1,9 @@
 package com.nhnacademy.midoo.taskapi.controller;
 
+import com.nhnacademy.midoo.taskapi.domain.TagDto;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagResponse;
+import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.service.TagService;
 import java.util.List;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +27,10 @@ public class TagRestController {
     @GetMapping("/{projectId}")
     public List<TagResponse> getTags(@PathVariable Long projectId) {
         return tagService.getTags(projectId);
+    }
+    @GetMapping("/{tagId}/tagId ")
+    public TagDto getTag(@PathVariable Long tagId){
+        return tagService.getTag(tagId);
     }
 
     @PostMapping("/{projectId}/register")
