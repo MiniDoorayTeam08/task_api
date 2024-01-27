@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MilestoneServiceImpl implements MilestoneService {
+
+
     private final MilestoneRepository milestoneRepository;
     private final ProjectRepository projectRepository;
 
@@ -27,7 +29,7 @@ public class MilestoneServiceImpl implements MilestoneService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<MilestoneResponse> getMilestone(Long projectId) {
+    public List<MilestoneResponse> getMilestones(Long projectId) {
         boolean isExist = projectRepository.existsById(projectId);
         if (!isExist) {
             throw new ProjectNotExistException();
@@ -56,6 +58,11 @@ public class MilestoneServiceImpl implements MilestoneService {
 
         milestoneRepository.save(resultMilestone);
         return MilestoneResponse.fromEntity(resultMilestone);
+    }
+
+    @Override
+    public Milestone getMilestone(Long milestoneID) {
+        return milestoneRepository.findById(milestoneID).orElseThrow(MilestoneNotExistException::new);
     }
 
 

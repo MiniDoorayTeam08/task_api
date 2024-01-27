@@ -2,6 +2,7 @@ package com.nhnacademy.midoo.taskapi.controller;
 
 import com.nhnacademy.midoo.taskapi.domain.MilestoneRequest;
 import com.nhnacademy.midoo.taskapi.domain.MilestoneResponse;
+import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.exception.ValidationFailedException;
 import com.nhnacademy.midoo.taskapi.service.MilestoneService;
 import java.util.List;
@@ -27,8 +28,12 @@ public class MilestoneRestController {
     }
 
     @GetMapping("/{projectId}")
-    public List<MilestoneResponse> getMilestone(@PathVariable Long projectId) {
-        return milestoneService.getMilestone(projectId);
+    public List<MilestoneResponse> getMilestones(@PathVariable Long projectId) {
+        return milestoneService.getMilestones(projectId);
+    }
+    @GetMapping("/{milestoneID}/milestoneId")
+    public Milestone getMilestone(@PathVariable Long milestoneID){
+        return milestoneService.getMilestone(milestoneID);
     }
 
     @PostMapping("/{projectId}/register")
