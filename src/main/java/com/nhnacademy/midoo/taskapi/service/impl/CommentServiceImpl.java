@@ -4,13 +4,11 @@ import com.nhnacademy.midoo.taskapi.domain.CommentRequest;
 import com.nhnacademy.midoo.taskapi.domain.CommentResponse;
 import com.nhnacademy.midoo.taskapi.entity.Comment;
 import com.nhnacademy.midoo.taskapi.exception.CommentNotExistException;
-import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TaskNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.CommentRepository;
 import com.nhnacademy.midoo.taskapi.repository.TaskRepository;
 import com.nhnacademy.midoo.taskapi.service.CommentService;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class CommentServiceImplementation implements CommentService {
+public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
 

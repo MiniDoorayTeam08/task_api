@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TaskServiceImplementation implements TaskService {
+public class TaskServiceImpl implements TaskService {
     private final ProjectRepository projectRepository;
     private final MilestoneRepository milestoneRepository;
     private final TagRepository tagRepository;
