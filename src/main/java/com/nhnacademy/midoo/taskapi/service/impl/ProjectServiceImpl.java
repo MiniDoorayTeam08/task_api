@@ -1,11 +1,11 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
+import com.nhnacademy.midoo.taskapi.domain.ProjectMemberRepository;
 import com.nhnacademy.midoo.taskapi.domain.ProjectRequest;
 import com.nhnacademy.midoo.taskapi.domain.ProjectResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
-import com.nhnacademy.midoo.taskapi.domain.ProjectMemberRepository;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.service.ProjectService;
 import java.util.List;
@@ -54,7 +54,7 @@ public class ProjectServiceImpl implements ProjectService {
                         .project(project)
                         .build()
         );
-        if(projectRequest.getProjectMemberIdList().isEmpty()){
+        if (projectRequest.getProjectMemberIdList().isEmpty()) {
             return ProjectResponse.fromEntity(project);
         }
         projectRequest.getProjectMemberIdList().forEach(
@@ -87,7 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void deleteProject(Long id) {
-        if(!projectRepository.existsById(id)) {
+        if (!projectRepository.existsById(id)) {
             throw new ProjectNotExistException();
         }
         projectRepository.deleteById(id);

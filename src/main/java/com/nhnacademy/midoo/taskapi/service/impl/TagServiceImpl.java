@@ -6,7 +6,6 @@ import com.nhnacademy.midoo.taskapi.domain.TagResponse;
 import com.nhnacademy.midoo.taskapi.entity.Project;
 import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
-import com.nhnacademy.midoo.taskapi.exception.TagAlreadyExistException;
 import com.nhnacademy.midoo.taskapi.exception.TagNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.ProjectRepository;
 import com.nhnacademy.midoo.taskapi.repository.TagRepository;

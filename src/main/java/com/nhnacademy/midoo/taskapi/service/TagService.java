@@ -3,7 +3,6 @@ package com.nhnacademy.midoo.taskapi.service;
 import com.nhnacademy.midoo.taskapi.domain.TagDto;
 import com.nhnacademy.midoo.taskapi.domain.TagRequest;
 import com.nhnacademy.midoo.taskapi.domain.TagResponse;
-import com.nhnacademy.midoo.taskapi.entity.Tag;
 import java.util.List;
 
 public interface TagService {

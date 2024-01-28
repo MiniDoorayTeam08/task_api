@@ -1,11 +1,7 @@
 package com.nhnacademy.midoo.taskapi.service.impl;
 
 import com.nhnacademy.midoo.taskapi.domain.*;
-import com.nhnacademy.midoo.taskapi.entity.Milestone;
-import com.nhnacademy.midoo.taskapi.entity.Project;
-import com.nhnacademy.midoo.taskapi.entity.Tag;
-import com.nhnacademy.midoo.taskapi.entity.Task;
-import com.nhnacademy.midoo.taskapi.entity.TaskTag;
+import com.nhnacademy.midoo.taskapi.entity.*;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TagNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TaskNotExistException;
@@ -39,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TagResponse> getTagList(Long taskId){
+    public List<TagResponse> getTagList(Long taskId) {
         List<TaskTag> tags = taskTagRepository.findByTask_TaskId(taskId);
         return tags.stream().map(taskTag -> TagResponse.fromEntity(taskTag.getTag())).collect(Collectors.toList());
     }
@@ -83,8 +79,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Transactional
-    public void createTaskTag(TaskRequest taskRequest, Task task){
-        if(!Objects.isNull(taskRequest.getTagListId()) && !taskRequest.getTagListId().isEmpty()){
+    public void createTaskTag(TaskRequest taskRequest, Task task) {
+        if (!Objects.isNull(taskRequest.getTagListId()) && !taskRequest.getTagListId().isEmpty()) {
             List<Tag> tagList = taskRequest.getTagListId().stream().map(
                     tagId -> tagRepository.findById(tagId).orElseThrow(TagNotExistException::new)
             ).collect(Collectors.toList());

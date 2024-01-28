@@ -2,7 +2,6 @@ package com.nhnacademy.midoo.taskapi.service;
 
 import com.nhnacademy.midoo.taskapi.domain.CommentRequest;
 import com.nhnacademy.midoo.taskapi.domain.CommentResponse;
-import com.nhnacademy.midoo.taskapi.entity.Comment;
 import java.util.List;
 
 public interface CommentService {
