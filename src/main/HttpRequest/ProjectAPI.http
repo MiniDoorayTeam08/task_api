@@ -38,7 +38,7 @@ Content-Type: application/json;charset=UTF-8
 {
   "accountId":"suyeon",
   "projectName":"project4",
-  "projectExplain":"수정",
+  "projectExplain":"수정??",
   "projectStatus":"활성",
   "projectMemberIdList": [
     "updateUser1",

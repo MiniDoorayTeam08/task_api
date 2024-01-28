@@ -48,21 +48,14 @@ Content-Type: application/json;charset=UTF-8
 GET http://localhost:7070/tasks/3
 
 ###
-PUT http://localhost:7070/tasks/6
+PUT http://localhost:7070/tasks/33
 Content-Type: application/json;charset=UTF-8
 
 {
-    "taskId": 6,
+    "taskId": 33,
     "taskTitle": "네번째 업무",
     "taskContent": "수정해봅시다~!~!",
-    "project": {
-      "projectId": 3,
-      "accountId": "suyeon",
-      "projectName": "project3",
-      "projectExplain": "project is good",
-      "projectStatus": "활성",
-      "projectMembers": []
-    },
+    "projectId": 3,
     "accountId": "suyeon"
   }
 

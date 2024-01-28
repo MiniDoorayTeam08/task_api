@@ -77,28 +77,16 @@ public class TaskServiceImplementation implements TaskService {
     @Override
     @Transactional
     public TaskResponse modifyTask(Long taskId, TaskRequest taskRequest) {
-        Project project = projectRepository.findById(taskRequest.getProjectId()).orElseThrow(ProjectNotExistException::new);
-        Milestone milestone = milestoneRepository.findById(taskRequest.getMilestoneId()).orElse(null);
         Task changeTask = taskRepository.findById(taskId).orElseThrow(TaskNotExistException::new);
 
-        Task task = TaskRequest.toEntity(taskRequest, project, milestone);
+        Task task = TaskRequest.toEntity(taskRequest, changeTask.getProject(), changeTask.getMilestone());
         Task resultTask = changeTask.toBuilder()
                 .taskTitle(task.getTaskTitle())
                 .taskContent(task.getTaskContent())
-                .milestone(milestone)
                 .build();
-
-        List<Tag> tagList = taskRequest.getTagListId().stream().map(
-                tagId -> tagRepository.findById(tagId).orElse(null)
-        ).collect(Collectors.toList());
 
         taskRepository.save(resultTask);
 
-        tagList.stream().filter(tag -> tag != null).forEach(tag ->
-                taskTagRepository.save(TaskTag.builder()
-                        .pk(new TaskTag.Pk(tag.getTagId(), task.getTaskId())).tag(tag).task(task).build()
-                )
-        );
         return TaskResponse.fromEntity(resultTask);
     }
 

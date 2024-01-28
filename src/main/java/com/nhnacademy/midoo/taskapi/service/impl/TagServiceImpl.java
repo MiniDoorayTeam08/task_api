@@ -66,6 +66,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TagDto getTag(Long tagId) {
         return tagRepository.findByTagId(tagId).orElseThrow(TagNotExistException::new);
     }

@@ -70,15 +70,9 @@ public class ProjectServiceImplements implements ProjectService {
         return ProjectResponse.fromEntity(project);
     }
 
-    // TODO : modify는 나중에 수정 더 하기! => 어떤 것만 수정할지 정해야할 것 같음..
     @Override
     @Transactional
     public ProjectResponse modifyProject(Long id, ProjectRequest projectRequest) {
-        List<ProjectMemberOfPkResponse> projectMembers = projectMemberRepository.findByPk_ProjectId(id);
-
-        projectMembers.stream().forEach(projectMember ->
-                projectMemberRepository.deleteById(projectMember.getPk()));
-
         Project changeProject = projectRepository.findById(id).orElseThrow(ProjectNotExistException::new);
 
         Project project = ProjectRequest.toEntity(projectRequest);
@@ -89,26 +83,6 @@ public class ProjectServiceImplements implements ProjectService {
                 .build();
 
         projectRepository.save(resultProject);
-        projectMemberRepository.save(
-                ProjectMember.builder()
-                        .pk(new ProjectMember.Pk(resultProject.getAccountId(), project.getProjectId()))
-                        .project(project)
-                        .build()
-        );
-
-        if(projectRequest.getProjectMemberIdList().isEmpty()){
-            return ProjectResponse.fromEntity(project);
-        }
-
-        projectRequest.getProjectMemberIdList().forEach(
-                memberId -> projectMemberRepository.save(
-                        ProjectMember.builder()
-                                .pk(new ProjectMember.Pk(memberId, project.getProjectId()))
-                                .project(project)
-                                .build()
-                )
-        );
-
         return ProjectResponse.fromEntity(resultProject);
     }
 
