@@ -15,7 +15,7 @@ public class ProjectMember {
     @EmbeddedId
     private Pk pk;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("projectId")
     @JoinColumn(name = "project_id")
     private Project project;

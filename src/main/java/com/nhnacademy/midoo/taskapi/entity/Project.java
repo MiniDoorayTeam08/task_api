@@ -38,7 +38,4 @@ public class Project {
 
     @Column(name = "project_status")
     private String projectStatus;
-
-    @OneToMany(mappedBy = "project")
-    private List<ProjectMember> projectMembers;
 }

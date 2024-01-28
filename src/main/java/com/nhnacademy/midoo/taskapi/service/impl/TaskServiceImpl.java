@@ -100,6 +100,8 @@ public class TaskServiceImpl implements TaskService {
         if (!taskRepository.existsById(taskId)) {
             throw new TaskNotExistException();
         }
+        commentRepository.deleteByTask_TaskId(taskId);
+        taskTagRepository.deleteByPk_TaskId(taskId);
         taskRepository.deleteById(taskId);
     }
 
