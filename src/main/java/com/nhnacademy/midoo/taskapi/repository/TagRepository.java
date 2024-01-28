@@ -16,7 +16,4 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
             "ON t.tagId = tt.pk.tagId " +
             "WHERE tt.pk.taskId = :taskId")
     List<TagDto> findAllBy(Long taskId);
-
-    Optional<Tag> findByProjectProjectIdAndTagName(Long projectId, String name);
-    
 }

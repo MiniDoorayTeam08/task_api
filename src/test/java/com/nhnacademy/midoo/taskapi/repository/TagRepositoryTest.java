@@ -3,10 +3,11 @@ package com.nhnacademy.midoo.taskapi.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.nhnacademy.midoo.taskapi.domain.CommentDto;
-import com.nhnacademy.midoo.taskapi.entity.Comment;
+import com.nhnacademy.midoo.taskapi.domain.TagDto;
 import com.nhnacademy.midoo.taskapi.entity.Project;
+import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.entity.Task;
+import com.nhnacademy.midoo.taskapi.entity.TaskTag;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,18 +21,20 @@ import org.springframework.test.context.ActiveProfiles;
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CommentRepositoryTest {
+class TagRepositoryTest {
     @Autowired
     TestEntityManager entityManager;
 
     @Autowired
-    CommentRepository commentRepository;
+    TagRepository tagRepository;
 
     private Project project;
 
     private Task task;
 
-    private Comment comment;
+    private Tag tag;
+
+    private TaskTag taskTag;
 
     @BeforeEach
     void setUp(){
@@ -43,6 +46,13 @@ class CommentRepositoryTest {
                 .build();
         entityManager.persist(project);
 
+        tag = new Tag().toBuilder()
+                .tagName("태그 이름")
+                .project(project)
+                .build();
+
+        entityManager.persist(tag);
+
         task = new Task().toBuilder()
                 .taskTitle("업무 제목")
                 .taskContent("업무 내용")
@@ -52,36 +62,37 @@ class CommentRepositoryTest {
 
         entityManager.persist(task);
 
-        comment = new Comment().toBuilder()
-                .commentContent("댓글 내용")
+        taskTag = new TaskTag().toBuilder()
+                .pk(new TaskTag.Pk(task.getTaskId(), tag.getTagId()))
                 .task(task)
-                .accountId("test")
+                .tag(tag)
                 .build();
 
-        entityManager.persist(comment);
+        entityManager.persist(taskTag);
     }
 
     @Test
-    @DisplayName("TaskId로 댓글들 찾기")
-    void testFindAllByTaskId() {
-        List<CommentDto> byTaskId = commentRepository.findAllByTask_TaskId(task.getTaskId());
+    @DisplayName("ProjectId로 찾기")
+    void findAllByProjectProjectId() {
+        List<Tag> tagList = tagRepository.findAllByProjectProjectId(project.getProjectId());
 
-        assertThat(byTaskId).hasSize(1);
+        assertThat(tagList).hasSize(1);
     }
 
     @Test
-    @DisplayName("TaskId로 댓글들 찾기")
-    void findByTaskId() {
-        List<Comment> byTaskId = commentRepository.findByTask_TaskId(task.getTaskId());
+    @DisplayName("TagId로 찾기")
+    void findByTagId() {
+        TagDto byId = tagRepository.findByTagId(tag.getTagId()).orElse(null);
 
-        assertThat(byTaskId).hasSize(1);
+        assertThat(byId.getTagId()).isEqualTo(tag.getTagId());
+        assertThat(byId.getTagName()).isEqualTo(tag.getTagName());
     }
 
     @Test
-    void deleteByTaskId() {
-        commentRepository.deleteByTask_TaskId(task.getTaskId());
+    @DisplayName("TaskId로 찾기")
+    void findAllBy() {
+        List<TagDto> tagDtoList = tagRepository.findAllBy(task.getTaskId());
 
-        List<Comment> byTaskId = commentRepository.findByTask_TaskId(task.getTaskId());
-        assertThat(byTaskId).hasSize(0);
+        assertThat(tagDtoList).hasSize(1);
     }
 }

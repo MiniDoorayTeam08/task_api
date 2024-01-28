@@ -1,4 +1,4 @@
-package com.nhnacademy.midoo.taskapi.repository;
+package com.nhnacademy.midoo.taskapi.domain;
 
 import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
 

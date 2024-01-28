@@ -1,7 +1,6 @@
 package com.nhnacademy.midoo.taskapi.domain;
 
 import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
-import com.nhnacademy.midoo.taskapi.repository.ProjectMemberOfPkResponse;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

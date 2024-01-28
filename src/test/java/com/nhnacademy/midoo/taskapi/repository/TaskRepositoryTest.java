@@ -3,13 +3,10 @@ package com.nhnacademy.midoo.taskapi.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.nhnacademy.midoo.taskapi.domain.MilestoneDto;
-import com.nhnacademy.midoo.taskapi.entity.Milestone;
+import com.nhnacademy.midoo.taskapi.domain.TaskDto;
 import com.nhnacademy.midoo.taskapi.entity.Project;
+import com.nhnacademy.midoo.taskapi.entity.Task;
 import java.util.List;
-import java.util.Optional;
-import lombok.Data;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,15 +19,15 @@ import org.springframework.test.context.ActiveProfiles;
 @DataJpaTest
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class MilestoneRepositoryTest {
+class TaskRepositoryTest {
     @Autowired
     TestEntityManager entityManager;
 
     @Autowired
-    MilestoneRepository milestoneRepository;
+    TaskRepository taskRepository;
 
     private Project project;
-    private Milestone milestone;
+    private Task task;
 
     @BeforeEach
     void setUp(){
@@ -41,27 +38,34 @@ class MilestoneRepositoryTest {
                 .projectStatus("활동")
                 .build();
         entityManager.persist(project);
-        milestone = new Milestone().toBuilder()
-                .milestoneName("실행")
+
+        task = new Task().toBuilder()
+                .taskTitle("업무 제목")
+                .taskContent("업무 내용")
                 .project(project)
+                .accountId("test")
                 .build();
 
-        entityManager.persist(milestone);
+        entityManager.persist(task);
+    }
+
+
+    @Test
+    @DisplayName("TaskId로 Task 찾기")
+    void findByTaskId() {
+        TaskDto taskDto = taskRepository.findByTaskId(task.getTaskId()).orElse(null);
+
+        assertThat(taskDto.getTaskId()).isEqualTo(task.getTaskId());
+        assertThat(taskDto.getTaskTitle()).isEqualTo(task.getTaskTitle());
+        assertThat(taskDto.getTaskContent()).isEqualTo(task.getTaskContent());
+        assertThat(taskDto.getMilestone()).isEqualTo(task.getMilestone());
     }
 
     @Test
-    @DisplayName("ProjectId로 마일스톤 찾기")
-    void findAllByProjectProjectId() {
-        List<Milestone> byProjectId = milestoneRepository.findAllByProjectProjectId(project.getProjectId());
-        assertThat(byProjectId).hasSize(1);
-    }
+    @DisplayName("ProjectId로 Task 찾기")
+    void findByProject_ProjectId() {
+        List<Task> tasks = taskRepository.findByProject_ProjectId(project.getProjectId());
 
-    @Test
-    @DisplayName("MilestoneId로 마일스톤 찾기")
-    void findByMilestoneId() {
-        MilestoneDto byId = milestoneRepository.findByMilestoneId(milestone.getMilestoneId()).orElse(null);
-
-        assertThat(byId.getMilestoneId()).isEqualTo(milestone.getMilestoneId());
-        assertThat(byId.getMilestoneName()).isEqualTo(milestone.getMilestoneName());
+        assertThat(tasks).hasSize(1);
     }
 }

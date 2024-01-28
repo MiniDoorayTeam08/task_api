@@ -21,10 +21,10 @@ public class ProjectRequest {
     @Size(max = 10)
     String projectName;
 
-    @NotBlank
     @Size(max = 100)
     String projectExplain;
 
+    @NotBlank
     @Size(max = 300)
     String projectStatus;
 
