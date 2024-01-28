@@ -1,7 +1,6 @@
 package com.nhnacademy.midoo.taskapi.service;
 
 import com.nhnacademy.midoo.taskapi.domain.*;
-import com.nhnacademy.midoo.taskapi.entity.Task;
 import java.util.List;
 
 public interface TaskService {
@@ -18,4 +17,6 @@ public interface TaskService {
     void deleteTask(Long taskId);
 
     TaskDetailResponse getTask(Long taskId);
+
+    TaskDto getTaskDto(Long taskId);
 }

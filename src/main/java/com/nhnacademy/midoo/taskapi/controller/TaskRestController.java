@@ -39,9 +39,13 @@ public class TaskRestController {
     public MilestoneResponse getMilestone(@PathVariable Long taskId) {
         return taskService.getMilestone(taskId);
     }
-    @GetMapping("/{taskId}/taskId")
+    @GetMapping("/{taskId}/detail")
     public TaskDetailResponse getTask(@PathVariable Long taskId){
         return taskService.getTask(taskId);
+    }
+    @GetMapping("/{taskId}/taskDto")
+    public TaskDto getTaskDto(@PathVariable("taskId") Long taskId) {
+        return taskService.getTaskDto(taskId);
     }
 
 

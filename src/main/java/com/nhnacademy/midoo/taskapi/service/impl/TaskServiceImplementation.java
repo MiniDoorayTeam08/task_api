@@ -3,18 +3,13 @@ package com.nhnacademy.midoo.taskapi.service.impl;
 import com.nhnacademy.midoo.taskapi.domain.*;
 import com.nhnacademy.midoo.taskapi.entity.Milestone;
 import com.nhnacademy.midoo.taskapi.entity.Project;
-import com.nhnacademy.midoo.taskapi.entity.ProjectMember;
-import com.nhnacademy.midoo.taskapi.entity.Tag;
 import com.nhnacademy.midoo.taskapi.entity.Task;
 import com.nhnacademy.midoo.taskapi.entity.TaskTag;
-import com.nhnacademy.midoo.taskapi.exception.MilestoneNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.ProjectNotExistException;
 import com.nhnacademy.midoo.taskapi.exception.TaskNotExistException;
 import com.nhnacademy.midoo.taskapi.repository.*;
 import com.nhnacademy.midoo.taskapi.service.TaskService;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -107,5 +102,10 @@ public class TaskServiceImplementation implements TaskService {
         List<TagDto> tag = tagRepository.findAllBy(taskId);
 
         return new TaskDetailResponse(task, tag, comment);
+    }
+
+    @Override
+    public TaskDto getTaskDto(Long taskId) {
+        return taskRepository.findByTaskId(taskId).orElseThrow(TaskNotExistException::new);
     }
 }
