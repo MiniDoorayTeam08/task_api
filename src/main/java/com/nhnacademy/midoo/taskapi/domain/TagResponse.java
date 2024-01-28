@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Value;
 
 @Getter
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
