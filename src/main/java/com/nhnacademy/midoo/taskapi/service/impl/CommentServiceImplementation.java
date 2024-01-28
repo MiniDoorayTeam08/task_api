@@ -49,18 +49,13 @@ public class CommentServiceImplementation implements CommentService {
         return CommentResponse.fromEntity(commentRepository.save(comment));
     }
 
-    // TODO : modify는 나중에 수정 더 하기! => 어떤 것만 수정할지 정해야할 것 같음..
     @Override
     @Transactional
     public CommentResponse modifyComment(Long commentId, CommentRequest commentRequest) {
-        Optional<Comment> changeComment = commentRepository.findById(commentId);
-
-        if (changeComment.isEmpty()) {
-            throw new ProjectNotExistException();
-        }
+        Comment changeComment = commentRepository.findById(commentId).orElseThrow(CommentNotExistException::new);
 
         Comment comment = CommentRequest.toEntity(commentRequest);
-        Comment resultComment = changeComment.get().toBuilder()
+        Comment resultComment = changeComment.toBuilder()
                 .commentContent(comment.getCommentContent())
                 .build();
 
